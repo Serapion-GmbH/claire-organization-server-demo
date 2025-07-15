@@ -1,5 +1,5 @@
 """
-Session management router for NOVA system integration.
+Session management router for Claire interaction.
 
 This module provides API endpoints for managing chat sessions, including
 creation, listing, renewal, and deletion of sessions.
@@ -12,16 +12,15 @@ from fastapi_auth0 import Auth0User
 
 from organization_server_demo.modules.base.authenticated_user_provider import get_authenticated_user
 from organization_server_demo.modules.base.models import PaginatedResults
-from organization_server_demo.modules.base.utils import dump_prefixed_id
-from organization_server_demo.modules.nova.models.bots import BotID
-from organization_server_demo.modules.nova.models.sessions import ClientSessionResponse, SessionRequest, \
+from organization_server_demo.modules.claire.models.bots import BotID
+from organization_server_demo.modules.claire.models.sessions import ClientSessionResponse, SessionRequest, \
     MessageEditability, SessionRequestUser, ChatSessionDTO
-from organization_server_demo.modules.nova.models.settings import NovaSettings
-from organization_server_demo.modules.nova.providers.bot_provider import get_bot_service
-from organization_server_demo.modules.nova.providers.session_provider import get_session_service
-from organization_server_demo.modules.nova.providers.settings_provider import get_settings
-from organization_server_demo.modules.nova.services.bot_service import BotService
-from organization_server_demo.modules.nova.services.session_service import SessionService
+from organization_server_demo.modules.claire.models.settings import ClaireSettings
+from organization_server_demo.modules.claire.providers.bot_provider import get_bot_service
+from organization_server_demo.modules.claire.providers.session_provider import get_session_service
+from organization_server_demo.modules.claire.providers.settings_provider import get_settings
+from organization_server_demo.modules.claire.services.bot_service import BotService
+from organization_server_demo.modules.claire.services.session_service import SessionService
 
 router = APIRouter(tags=["Sessions"])
 
@@ -30,7 +29,7 @@ router = APIRouter(tags=["Sessions"])
 async def create_session(
     bot_id: BotID,
     user: Annotated[Auth0User, Depends(get_authenticated_user)],
-    settings: Annotated[NovaSettings, Depends(get_settings)],
+    settings: Annotated[ClaireSettings, Depends(get_settings)],
     session_service: Annotated[SessionService, Depends(get_session_service)],
 ):
     """
@@ -42,7 +41,7 @@ async def create_session(
     Args:
         bot_id: Identifier of the bot to use for the session.
         user: Authenticated user creating the session.
-        settings: NOVA system settings containing enabled device actions.
+        settings: Claire settings containing enabled device actions.
         session_service: Session service dependency for session management.
         
     Returns:
@@ -95,7 +94,7 @@ async def list_sessions(
 async def renew_session(
     session_id: str,
     user: Annotated[Auth0User, Depends(get_authenticated_user)],
-    nova_service: Annotated[SessionService, Depends(get_session_service)],
+    claire_service: Annotated[SessionService, Depends(get_session_service)],
 ):
     """
     Renew an existing session.
@@ -106,12 +105,12 @@ async def renew_session(
     Args:
         session_id: Identifier of the session to renew.
         user: Authenticated user renewing the session.
-        nova_service: Session service dependency for session management.
+        claire_service: Session service dependency for session management.
         
     Returns:
         ClientSessionResponse: Updated session information and new token.
     """
-    response = await nova_service.renew_session(session_id, user.id)
+    response = await claire_service.renew_session(session_id, user.id)
 
     return response
 
@@ -119,7 +118,7 @@ async def renew_session(
 @router.delete("/{session_id}", dependencies=[Depends(get_authenticated_user)])
 async def delete_session(
     session_id: str,
-    nova_service: Annotated[SessionService, Depends(get_session_service)],
+    claire_service: Annotated[SessionService, Depends(get_session_service)],
 ):
     """
     Delete a session.
@@ -128,10 +127,10 @@ async def delete_session(
     
     Args:
         session_id: Identifier of the session to delete.
-        nova_service: Session service dependency for session management.
+        claire_service: Session service dependency for session management.
         
     Returns:
         dict: Empty response object.
     """
-    await nova_service.delete_session(session_id)
+    await claire_service.delete_session(session_id)
     return {}

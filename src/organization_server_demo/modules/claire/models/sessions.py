@@ -1,5 +1,5 @@
 """
-Session-related data models for NOVA system integration.
+Session-related data models for Claire integration.
 
 This module defines the data models for session management, including session
 requests, responses, and chat session data transfer objects.
@@ -11,7 +11,7 @@ from typing import NewType, Any
 from pydantic import BaseModel
 
 from organization_server_demo.modules.base.prefixed_id import PrefixedUUID
-from organization_server_demo.modules.nova.models.bots import BotID
+from organization_server_demo.modules.claire.models.bots import BotID
 
 SessionID = NewType("SessionID", PrefixedUUID("session"))
 OrganizationID = NewType("OrganizationID", PrefixedUUID("org"))
@@ -43,7 +43,7 @@ class SessionRequest(BaseModel):
     Request model for creating a new session.
     
     Contains all the necessary information to create a new chat session
-    in the NOVA system.
+    in Claire.
     
     Attributes:
         user: User information for the session.
@@ -56,7 +56,7 @@ class SessionRequest(BaseModel):
     bot_id: BotID
     enabled_device_actions: list[str]
     editable: MessageEditability = MessageEditability.none
-    meta: Any = None
+    meta: Any = {}
 
 
 class SessionDto(BaseModel):
@@ -74,7 +74,7 @@ class SessionDto(BaseModel):
     organization_id: OrganizationID
     session_id: SessionID
     editable: MessageEditability
-    meta: Any = None
+    meta: Any = {}
 
 
 class ClientSessionResponse(BaseModel):

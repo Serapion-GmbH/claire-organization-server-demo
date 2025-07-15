@@ -2,13 +2,13 @@
 Application settings configuration.
 
 This module defines the configuration classes for the organization server demo,
-including CORS, Auth0, and NOVA system settings using Pydantic settings.
+including CORS, Auth0, and Claire settings using Pydantic settings.
 """
 
 from pydantic import field_validator, BaseModel
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from organization_server_demo.modules.nova.models.settings import NovaSettings
+from organization_server_demo.modules.claire.models.settings import ClaireSettings
 
 
 class CORSSettings(BaseModel):
@@ -57,15 +57,15 @@ class OrganizationServerSettings(BaseSettings):
     Main application settings container.
     
     Combines all configuration settings for the organization server demo,
-    including Auth0, NOVA, and CORS settings.
+    including Auth0, Claire, and CORS settings.
     
     Attributes:
         auth0: Auth0 authentication settings.
-        nova: NOVA system integration settings.
+        claire: Claire communication settings.
         cors: CORS middleware settings.
     """
     auth0: Auth0Settings
-    nova: NovaSettings
+    claire: ClaireSettings
     cors: CORSSettings
 
     model_config = SettingsConfigDict(

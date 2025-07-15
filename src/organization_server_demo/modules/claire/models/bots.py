@@ -1,8 +1,8 @@
 """
-Bot-related data models for NOVA system integration.
+Bot-related data models for Claire integration.
 
 This module defines the data models for bot entities, including bot definitions
-and identifiers used in the NOVA system.
+and identifiers used in the Claire ecosystem.
 """
 
 from typing import NewType, Any
@@ -18,7 +18,7 @@ class BotDefinition(BaseModel):
     """
     Definition of a bot entity.
     
-    Represents a bot available in the NOVA system with its configuration
+    Represents a bot available in the Claire with its configuration
     and metadata.
     
     Attributes:

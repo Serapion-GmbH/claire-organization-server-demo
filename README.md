@@ -1,11 +1,11 @@
 # Organization Server Demo
 
-This is a FastAPI-based REST API that serves as a demo organization server for the NOVA System. It provides session management and bot integration capabilities with Auth0 authentication.
+This is a FastAPI-based REST API that serves as a demo organization server for the Claire Ecosystem. It provides session management and bot integration capabilities with Auth0 authentication.
 
 ## Features
 
 - Health check endpoint (`/` and `/health`)
-- Integration with NOVA System
+- Interaction with the Claire API
 - Auth0 authentication support
 - CORS middleware support
 - Environment-based configuration
@@ -32,7 +32,7 @@ This is a FastAPI-based REST API that serves as a demo organization server for t
 
 Run the server:
 ```bash
-uvicorn src.organization_server_demo.app:app --reload
+uv run uvicorn src.organization_server_demo.app:app --reload
 ```
 
 The API will be available at `http://localhost:8000`

@@ -1,5 +1,5 @@
 """
-Bot management router for NOVA system integration.
+Bot management router for Claire ecosystem integration.
 
 This module provides API endpoints for managing and retrieving bot information
 in the organization server demo.
@@ -10,9 +10,9 @@ from typing import Annotated, List
 from fastapi import APIRouter, Depends
 
 from organization_server_demo.modules.base.authenticated_user_provider import get_authenticated_user
-from organization_server_demo.modules.nova.models.bots import BotDefinition
-from organization_server_demo.modules.nova.providers.bot_provider import get_bot_service
-from organization_server_demo.modules.nova.services.bot_service import BotService
+from organization_server_demo.modules.claire.models.bots import BotDefinition
+from organization_server_demo.modules.claire.providers.bot_provider import get_bot_service
+from organization_server_demo.modules.claire.services.bot_service import BotService
 
 router = APIRouter(tags=["Bots"])
 
@@ -24,7 +24,7 @@ async def get_bots(
     """
     Retrieve all available bots.
     
-    Returns a list of all bot definitions available in the NOVA system.
+    Returns a list of all bot definitions available in the Claire API.
     Requires authentication.
     
     Args:
@@ -33,4 +33,4 @@ async def get_bots(
     Returns:
         List[BotDefinition]: List of available bot definitions.
     """
-    return bot_service.get_bots()
+    return await bot_service.get_bots()

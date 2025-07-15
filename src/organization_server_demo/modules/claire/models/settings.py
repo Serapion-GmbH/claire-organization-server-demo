@@ -1,23 +1,23 @@
 """
-NOVA system settings model.
+Claire settings model.
 
-This module defines the configuration model for NOVA system integration,
+This module defines the configuration model for Claire ecosystem integration,
 including API credentials and device action configuration.
 """
 
 from pydantic import BaseModel, AnyHttpUrl
 
 
-class NovaSettings(BaseModel):
+class ClaireSettings(BaseModel):
     """
-    Configuration settings for NOVA system integration.
+    Configuration settings for Claire integration.
     
     Contains the necessary configuration for connecting to and interacting
-    with the NOVA system API.
+    with the Claire API.
     
     Attributes:
-        api_key: API key for authenticating with the NOVA system.
-        base_url: Base URL for the NOVA system API.
+        api_key: API key for authenticating with the Claire.
+        base_url: Base URL for the Claire API.
         enabled_device_action_ids: List of device action IDs that are enabled.
     """
     api_key: str

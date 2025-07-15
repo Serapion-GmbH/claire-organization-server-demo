@@ -1,5 +1,5 @@
 """
-Session service for NOVA system integration.
+Session service for Claire integration.
 
 This module provides service layer functionality for managing chat sessions,
 including creation, listing, retrieval, renewal, and deletion operations.
@@ -14,26 +14,26 @@ from starlette import status
 from organization_server_demo.modules.base.exceptions import OrganizationServerException
 from organization_server_demo.modules.base.models import PaginatedResults
 from organization_server_demo.modules.base.utils import dump_prefixed_id
-from organization_server_demo.modules.nova.models.bots import BotID
-from organization_server_demo.modules.nova.models.sessions import SessionRequest, ClientSessionResponse, ChatSessionDTO
-from organization_server_demo.modules.nova.services.nova_service import NOVAService
+from organization_server_demo.modules.claire.models.bots import BotID
+from organization_server_demo.modules.claire.models.sessions import SessionRequest, ClientSessionResponse, ChatSessionDTO
+from organization_server_demo.modules.claire.services.claire_service import ClaireService
 
 logger = logging.getLogger(__name__)
 
 
-class SessionService(NOVAService):
+class SessionService(ClaireService):
     """
     Service class for session management operations.
     
-    Provides methods for interacting with session-related endpoints in the NOVA system,
+    Provides methods for interacting with session-related endpoints in the Claire,
     including CRUD operations for chat sessions.
     """
     
     async def create_session(self, session_request: SessionRequest) -> ClientSessionResponse:
         """
-        Create a new chat session in the NOVA system.
+        Create a new chat session in the Claire API.
         
-        Sends a session creation request to the NOVA system with the provided
+        Sends a session creation request to the Claire API with the provided
         session parameters and returns the created session information.
         
         Args:
@@ -129,7 +129,7 @@ class SessionService(NOVAService):
         """
         Delete a chat session.
         
-        Permanently removes a chat session from the NOVA system.
+        Permanently removes a chat session from the Claire API.
         
         Args:
             session_id: Unique identifier of the session to delete.

@@ -1,8 +1,8 @@
 """
-Bot service for NOVA system integration.
+Bot service for Claire integration.
 
 This module provides service layer functionality for managing bots,
-including retrieving bot definitions from the NOVA system.
+including retrieving bot definitions from the Claire.
 """
 
 import logging
@@ -10,25 +10,25 @@ import logging
 from starlette import status
 
 from organization_server_demo.modules.base.exceptions import OrganizationServerException
-from organization_server_demo.modules.nova.models.bots import BotDefinition
-from organization_server_demo.modules.nova.services.nova_service import NOVAService
+from organization_server_demo.modules.claire.models.bots import BotDefinition
+from organization_server_demo.modules.claire.services.claire_service import ClaireService
 
 logger = logging.getLogger(__name__)
 
 
-class BotService(NOVAService):
+class BotService(ClaireService):
     """
     Service class for bot management operations.
     
-    Provides methods for interacting with bot-related endpoints in the NOVA system,
+    Provides methods for interacting with bot-related endpoints in the Claire,
     including retrieving available bot definitions.
     """
     
     async def get_bots(self) -> list[BotDefinition]:
         """
-        Retrieve all available bot definitions from the NOVA system.
+        Retrieve all available bot definitions from the Claire.
         
-        Makes an API call to the NOVA system to fetch the list of available bots
+        Makes an API call to the Claire to fetch the list of available bots
         and returns them as BotDefinition objects.
         
         Returns:

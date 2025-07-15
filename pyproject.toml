@@ -5,7 +5,7 @@ build-backend = "uv_build"
 [project]
 name = "organization-server-demo"
 version = "0.1.0"
-description = "A simple Demo for a simple FastAPI organization server used with the NOVA System"
+description = "A simple Demo for a simple FastAPI organization server used with the Claire Ecosystem"
 readme = "README.md"
 requires-python = ">=3.13"
 classifiers = [
