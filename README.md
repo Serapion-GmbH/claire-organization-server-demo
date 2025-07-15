@@ -1,53 +1,22 @@
 # Organization Server Demo
 
-This is a FastAPI-based REST API that serves as a demo organization server for the Claire Ecosystem. It provides session
-management and bot integration capabilities with Auth0 authentication.
+This is a FastAPI-based REST API that serves as a demo organization server for the Claire Ecosystem.
+It handles session management and retrieval of available bot using Auth0 as authentication provider.
+
+## Overview
+
+An organization server translates request of user potentially unknown to Claire of a specific organization
+to Claire API requests. This allows an organization to manage its own users via a custom authentication provider.
+A user authenticates itself against the organization server, which then forwards the user request to the Claire API
+using its own API key. This means Claire does not need to know about the user, but only about the organization.
 
 ## Features
 
 - Interaction with the Claire API
 - Auth0 authentication support
-- CORS middleware support
 - Environment-based configuration
 
-## Requirements
-
-- Python 3.13+
-- FastAPI
-- Pydantic
-- Pydantic Settings
-- Uvicorn
-- FastAPI Auth0
-- aiohttp
-
-## Installation
-
-1. Clone the repository
-2. Install uv on your system:
-   ```bash
-   pip install uv
-   ```
-3. Install dependencies:
-   ```bash
-   uv sync
-   ```
-
-## Usage
-
-Run the server:
-
-```bash
-uv run uvicorn src.organization_server_demo.app:app --reload
-```
-
-The API will be available at `http://localhost:8000`
-
 ## API Endpoints
-
-### Health
-
-- `GET /` - Health check endpoint
-- `GET /health` - Health check endpoint
 
 ### Sessions
 
@@ -59,6 +28,78 @@ The API will be available at `http://localhost:8000`
 ### Bots
 
 - `GET /bots` - List available bots
+
+## Installation
+
+1. Install uv on your system:
+
+   ```bash
+   pip install uv
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   uv sync
+   ```
+
+## Configuration
+
+### Generate Organization API Key
+
+To generate an organization API key, you can use the interactive `generate_api_key.sh` script:
+
+```bash
+./generate_api_key.sh
+```
+
+Or use the following curl command:
+
+```bash
+curl -X 'POST' \
+  'https://api-core.nova-ai.de/organizations/your-organization-id/api_keys' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer your-bearer-token' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "label": "your-api-key-label",
+  "scopes": [
+    "session"
+  ],
+  "expires_at": "your-expiration-date" # e.g. "2024-12-31T23:59:59Z"
+}'
+```
+
+### Create Environment File
+
+Create a .env.local file and copy the content of the `.env.example` in it:
+
+```bash
+cp .env.example .env.local
+```
+
+Configure the environment variables in `.env.local` as needed. The following variables are available:
+
+```env
+AUTH0__DOMAIN="" # Auth0 tenant domain
+AUTH0__AUDIENCE="" # Auth0 audience for the Auth0 API
+
+CLAIRE__BASE_URL="https://api-core.nova-ai.de" # Base URL of the Claire API
+CLAIRE__API_KEY="" # API key for the Claire API, see ...
+CLAIRE__ENABLED_DEVICE_ACTION_IDS="[]" # Comma-separated list of enabled device action IDs for this organization (optional)
+
+CORS__ALLOWED_ORIGINS='*' # Comma-separated list of allowed origins for CORS
+```
+
+## Usage
+
+Run the server:
+
+```bash
+uv run uvicorn src.organization_server_demo.app:app --reload
+```
+
+The API will be available at `http://localhost:8000`
 
 ## Docker
 
