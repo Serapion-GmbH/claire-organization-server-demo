@@ -1,14 +1,13 @@
 # Organization Server Demo
 
-This is a FastAPI-based REST API that serves as a demo organization server for the Claire Ecosystem.
-It handles session management and retrieval of available bot using Auth0 as authentication provider.
+This FastAPI-based API serves as a demo organization server for the Claire Ecosystem.
+It handles session management and retrieval of available bots using Auth0 as the authentication provider.
 
 ## Overview
 
-An organization server translates request of user potentially unknown to Claire of a specific organization
-to Claire API requests. This allows an organization to manage its own users via a custom authentication provider.
+An organization server translates the user request of a specific organization to the Claire API. This translation allows an organization to manage its users via a custom authentication provider.
 A user authenticates itself against the organization server, which then forwards the user request to the Claire API
-using its own API key. This means Claire does not need to know about the user, but only about the organization.
+using its own API key. This architecture means Claire does not need to know about the user, but only about the organization.
 
 ## API Endpoints
 
@@ -31,7 +30,7 @@ using its own API key. This means Claire does not need to know about the user, b
   pip install uv
   ```
 
-2. Install python dependencies via uv:
+2. Install Python dependencies via uv:
 
   ```bash
   uv sync
@@ -66,7 +65,7 @@ curl -X 'POST' \
 
 ### Create Environment File
 
-Create a .env.local file and copy the content of the `.env.example` in it:
+Create a .env.local file and copy the content of the `.env.example` into it:
 
 ```bash
 cp .env.example .env.local
@@ -79,7 +78,7 @@ AUTH0__DOMAIN="" # Auth0 tenant domain
 AUTH0__AUDIENCE="" # Auth0 audience for the Auth0 API
 
 CLAIRE__BASE_URL="https://api-core.nova-ai.de" # Base URL of the Claire API
-CLAIRE__API_KEY="" # API key for the Claire API, see ...
+CLAIRE__API_KEY="" # API key for the Claire API
 CLAIRE__ENABLED_DEVICE_ACTION_IDS="[]" # Comma-separated list of enabled device action IDs for this organization (optional)
 
 CORS__ALLOWED_ORIGINS='*' # Comma-separated list of allowed origins for CORS
