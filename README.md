@@ -10,12 +10,6 @@ to Claire API requests. This allows an organization to manage its own users via 
 A user authenticates itself against the organization server, which then forwards the user request to the Claire API
 using its own API key. This means Claire does not need to know about the user, but only about the organization.
 
-## Features
-
-- Interaction with the Claire API
-- Auth0 authentication support
-- Environment-based configuration
-
 ## API Endpoints
 
 ### Sessions
@@ -33,15 +27,15 @@ using its own API key. This means Claire does not need to know about the user, b
 
 1. Install uv on your system:
 
-   ```bash
-   pip install uv
-   ```
+  ```bash
+  pip install uv
+  ```
 
-2. Install dependencies:
+2. Install python dependencies via uv:
 
-   ```bash
-   uv sync
-   ```
+  ```bash
+  uv sync
+  ```
 
 ## Configuration
 
