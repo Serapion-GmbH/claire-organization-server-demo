@@ -15,7 +15,8 @@ from organization_server_demo.modules.base.exceptions import OrganizationServerE
 from organization_server_demo.modules.base.models import PaginatedResults
 from organization_server_demo.modules.base.utils import dump_prefixed_id
 from organization_server_demo.modules.claire.models.bots import BotID
-from organization_server_demo.modules.claire.models.sessions import SessionRequest, ClientSessionResponse, ChatSessionDTO
+from organization_server_demo.modules.claire.models.sessions import SessionRequest, ClientSessionResponse, \
+    ChatSessionDTO
 from organization_server_demo.modules.claire.services.claire_service import ClaireService
 
 logger = logging.getLogger(__name__)
@@ -28,7 +29,7 @@ class SessionService(ClaireService):
     Provides methods for interacting with session-related endpoints in the Claire,
     including CRUD operations for chat sessions.
     """
-    
+
     async def create_session(self, session_request: SessionRequest) -> ClientSessionResponse:
         """
         Create a new chat session in the Claire API.
@@ -48,11 +49,11 @@ class SessionService(ClaireService):
         encoded_body = json.dumps(session_request, default=jsonable_encoder).encode("utf-8")
         async with self._client as client:
             async with client.post(
-                "/m2m/client_sessions",
-                data=encoded_body,
-                headers={
-                    "Content-Type": "application/json",
-                },
+                    "/m2m/client_sessions",
+                    data=encoded_body,
+                    headers={
+                        "Content-Type": "application/json",
+                    },
             ) as resp:
                 result = await resp.json()
                 if resp.status != 200:
@@ -92,6 +93,10 @@ class SessionService(ClaireService):
         async with self._client as client:
             async with client.get("/m2m/client_sessions/", params=params) as resp:
                 result = await resp.json()
+                if resp.status == 404:
+                    return PaginatedResults[ChatSessionDTO](
+                        results=[], cursor=None
+                    )
                 if resp.status != 200:
                     logger.error("Could not list chat sessions: %s", result)
                     raise OrganizationServerException(
@@ -168,11 +173,11 @@ class SessionService(ClaireService):
 
         async with self._client as client:
             async with client.post(
-                f"/m2m/client_sessions/{session_id}/renew",
-                data=encoded_body,
-                headers={
-                    "Content-Type": "application/json",
-                },
+                    f"/m2m/client_sessions/{session_id}/renew",
+                    data=encoded_body,
+                    headers={
+                        "Content-Type": "application/json",
+                    },
             ) as resp:
                 result = await resp.json()
                 if resp.status != 200:
